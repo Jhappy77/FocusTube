@@ -1,9 +1,21 @@
-let passphrase = "Hello World";
+let passphrase = "Hello World content";
 chrome.storage.sync.get("videoPasscode").then((result) => {
+  alert(result);
   if (result.videoPasscode) {
+    alert(videoPasscode);
     passphrase = videoPasscode;
   }
 });
+
+function setVideoPasscode(changes, area) {
+  alert("Set video passcode!");
+  alert(changes);
+  if (changes?.videoPasscode) {
+    alert("Setting passcode from listener!");
+    videoPasscode = changes.videoPasscode.newValue;
+  }
+}
+chrome.storage.onChanged.addListener(setVideoPasscode);
 
 const genreWhitelist = ["Music"];
 let videoFound = false;
@@ -15,7 +27,6 @@ const runCode = () => {
   const genreContainer = document.querySelector('meta[itemprop="genre"]');
   if (!genreContainer) {
     console.log("No genre container found");
-    return;
   }
 
   const genre = genreContainer.getAttribute("content");
