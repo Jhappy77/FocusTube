@@ -7,14 +7,14 @@
   <body>
     <h1>Extension Options</h1>
     <label for="video-passcode">Video Passcode:</label>
-    <input type="text" id="video-passcode" value="Hello world!">
+    <input type="text" id="video-passcode" value="Hello world!" />
     <button id="save-button">Save</button>
     <script>
       const saveButton = document.getElementById("save-button");
       const videoPasscode = document.getElementById("video-passcode");
 
       saveButton.addEventListener("click", () => {
-        browser.storage.sync.set({ videoPasscode: videoPasscode.value }, () => {
+        chrome.storage.sync.set({ videoPasscode: videoPasscode.value }, () => {
           alert("Options saved.");
         });
       });
