@@ -1,10 +1,10 @@
 {
-  "manifest_version": 2,
+  "manifest_version": 3,
   "name": "YouTube Video Hider",
   "version": "1.0",
   "description": "Hides all videos on YouTube pages and displays a message to the user",
   "background": {
-    "scripts": ["background.js"]
+    "service_worker": "background.js"
   },
   "icons": {
     "48": "icons/icon-48.png"
