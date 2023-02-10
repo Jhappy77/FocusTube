@@ -1,4 +1,5 @@
 let passphrase = "Hello World";
+
 browser.storage.sync.get("videoPasscode").then((result) => {
     if (result.videoPasscode) {
         passphrase = videoPasscode;
@@ -8,6 +9,13 @@ browser.storage.sync.get("videoPasscode").then((result) => {
 const genreWhitelist = ["Music"];
 let videoFound = false;
 let hiddenElements = [];
+
+browser.tabs.onUpdated.addListener(function(tabId, changeInfo) {
+    if (changeInfo.status == "complete") {
+        console.log("Reset videoFound status");
+        videoFound = false;
+    }
+});
 
 const runCode = () => {
     if(videoFound) return;
