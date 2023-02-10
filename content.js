@@ -5,9 +5,26 @@ chrome.storage.sync.get("videoPasscode").then((result) => {
   }
 });
 
+function setVideoPasscode(changes, area) {
+  alert("Set video passcode!");
+  alert(changes);
+  if (changes?.videoPasscode) {
+    alert("Setting passcode from listener!");
+    videoPasscode = changes.videoPasscode.newValue;
+  }
+}
+chrome.storage.onChanged.addListener(setVideoPasscode);
+
 const genreWhitelist = ["Music"];
 let videoFound = false;
 let hiddenElements = [];
+
+chrome.tabs.onUpdated.addListener(function(tabId, changeInfo) {
+    if (changeInfo.status == "complete") {
+        console.log("Reset videoFound status");
+        videoFound = false;
+    }
+});
 
 const runCode = () => {
   if (videoFound) return;
@@ -15,7 +32,6 @@ const runCode = () => {
   const genreContainer = document.querySelector('meta[itemprop="genre"]');
   if (!genreContainer) {
     console.log("No genre container found");
-    return;
   }
 
   const genre = genreContainer.getAttribute("content");
