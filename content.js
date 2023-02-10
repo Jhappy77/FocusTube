@@ -19,12 +19,13 @@ const genreWhitelist = ["Music"];
 let videoFound = false;
 let hiddenElements = [];
 
-chrome.tabs.onUpdated.addListener(function(tabId, changeInfo) {
-    if (changeInfo.status == "complete") {
-        console.log("Reset videoFound status");
+chrome.runtime.onMessage.addListener(
+    function(request, sender, sendResponse) {
+      if (request.message === 'resetUrl') {
         videoFound = false;
-    }
-});
+        console.log(request.url);
+      }
+  });
 
 const runCode = () => {
   if (videoFound) return;
