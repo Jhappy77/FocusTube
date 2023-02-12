@@ -1,8 +1,6 @@
-let passphrase = "Hello World content";
+let passphrase = "Videos are distractions - you need to focus on your goals";
 chrome.storage.sync.get("videoPasscode").then((result) => {
-  alert(result);
   if (result.videoPasscode) {
-    alert(videoPasscode);
     passphrase = videoPasscode;
   }
 });
@@ -20,6 +18,13 @@ chrome.storage.onChanged.addListener(setVideoPasscode);
 const genreWhitelist = ["Music"];
 let videoFound = false;
 let hiddenElements = [];
+
+chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  if (request.message === "resetUrl") {
+    videoFound = false;
+    console.log(request.url);
+  }
+});
 
 const runCode = () => {
   if (videoFound) return;
