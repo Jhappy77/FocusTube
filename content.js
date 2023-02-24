@@ -30,16 +30,16 @@ const runCode = () => {
   if (videoFound) return;
 
   const genreContainer = document.querySelector('meta[itemprop="genre"]');
-  if (!genreContainer) {
+  if (genreContainer) {
+    const genre = genreContainer.getAttribute("content");
+    console.log(`Genre: ${genre}`);
+    if (!!genre && genreWhitelist.includes(genre)) {
+      console.log("Genre from whitelist");
+      videoFound = true;
+      return;
+    }
+  } else {
     console.log("No genre container found");
-  }
-
-  const genre = genreContainer.getAttribute("content");
-  console.log(`Genre: ${genre}`);
-  if (!!genre && genreWhitelist.includes(genre)) {
-    console.log("Genre from whitelist");
-    videoFound = true;
-    return;
   }
 
   const player = document.getElementById("movie_player");
