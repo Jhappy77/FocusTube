@@ -21,11 +21,27 @@ const genreWhitelist = ["Music"];
 let videoFound = false;
 let hiddenElements = [];
 
+browser.runtime.onMessage.addListener(function (request, sender, sendResponse) {
+  // listen for messages sent from background.js
+  if (request.message === "resetUrl") {
+    videoFound = false;
+    console.log(request.url); // new url is now in content scripts!
+  }
+});
+
 const runCode = () => {
   if (videoFound) return;
 
   const genreContainer = document.querySelector('meta[itemprop="genre"]');
-  if (!genreContainer) {
+  if (genreContainer) {
+    const genre = genreContainer.getAttribute("content");
+    console.log(`Genre: ${genre}`);
+    if (!!genre && genreWhitelist.includes(genre)) {
+      console.log("Genre from whitelist");
+      videoFound = true;
+      return;
+    }
+  } else {
     console.log("No genre container found");
   }
 
