@@ -37,6 +37,15 @@ const runCode = () => {
     return;
   }
 
+  const scriptTagContent = document.querySelector("#scriptTag").textContent;
+  const genreMusic = /"genre":"Music"/;
+  const isGenreMusic = genreMusic.test(scriptTagContent);
+  if (isGenreMusic) {
+    console.log("Genre is music!");
+    videoFound = true;
+    return;
+  }
+
   const player = document.getElementById("movie_player");
   if (!player) {
     console.log("No player found!");
@@ -78,6 +87,9 @@ const runCode = () => {
 
   // Create the message element
   const message = document.createElement("p");
+  message.style.userSelect = `none`;
+  message.style.webkitUserSelect = `none`;
+  message.style.mozUserSelect = `none`;
   message.innerHTML = `Type "${passphrase}"`;
   message.style.fontFamily = "sans-serif";
   message.style.fontSize = "1.5rem";
